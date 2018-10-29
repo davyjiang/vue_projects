@@ -20,7 +20,7 @@
 </template>
 
 <script>
-export default {
+export default {  //In a simple file component, 'export default' must be in there.
   name: 'app',
   data () {
     return {
@@ -30,7 +30,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
