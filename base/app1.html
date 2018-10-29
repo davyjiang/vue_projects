@@ -1,0 +1,139 @@
+<script src="https://unpkg.com/vue"></script>
+<div id="app-1">
+    <h1>{{msg | firstCharCapital(true)}}</h1>
+    <p :style="contentColor">Learn how to use filter from the source code of the above example.</p>
+
+    <h3 :style="contentColor">{{content}}</h3>
+    <div>
+        <p :style="contentColor">Event Modifiers (.stop, .prevent, .once)</p>
+        <p><a @click.once="doEventModifier">event modifier 'once'</a></p>
+    </div>
+    <div>
+        <p :style="contentColor">Key Modifiers</p>
+        <p>include: .enter, .tab, .delete (captures both “Delete” and “Backspace” keys), .esc, .space, .up, .down, .left, .right</p>
+        <p><input @keyup.enter.space.delete.up.down.left.right.esc="doKeyModifier"></p>
+    </div>
+    <div>
+        <p :style="contentColor">System Modifiers</p>
+        <p>include:.ctrl, .alt, .shift, .meta</p>
+        <div @click.alt="doSystemModifier">SystemModifier</div>
+    </div>
+    <div>
+        <p :style="contentColor">V-model.trim.number.lazy</p>
+        <p><input type="text" v-model.trim.number.lazy="modelText"> {{typeof modelText}}</p>
+    </div>
+    <div>
+        <span :title="message">
+            <p>{{messageNotice}}</p>
+
+            <p>If you open up your JavaScript console again and <span :style="color">enter app1.message = 'some new message',</span> you will once again see that the bound HTML - in this case the title attribute - has been updated.</p>
+            <div :id="dynamicId">dynamicId is {{dynamicId}}</div>
+            <button :disabled="isButtonDisabled" @click="addOne">Add One</button>
+            <button :disabled="isButtonDisabled" @click="subOne">Sub One</button>
+        </span>
+    </div>
+
+    <div v-if="seen">
+        <p>Now you see me</p>
+        <p>Go ahead and <span :style="color">enter app1.seen = false in the console.</span> You should see the message disappear.</p>
+    </div>
+
+    <div>
+        <p>{{testBindClass}}<span :style="bindColor">{{bindColorMsg}}</span></p>
+        <p class="static" :class="{ active: isActive, 'text-danger': hasError }">test bind</p>
+        <p></p>
+        <p :class="classObject">This is a bind object example.</p>
+        <p>If you want to change classObject value, <span :style="bindObjectClass">you can app1.classObject={active:true, 'text-danger':true}.</span> After that, please view element then you can see the class change.</p>
+    </div>
+
+    <div>
+        <p :style="bindFilterColor">{{bindFilterMsg}}</p>
+        <span>{{filterMsg | filterA | filterB}}</span><span :style="urlBindColor">{{filterNotice}}</span>
+    </div>
+
+    <div>
+        <p>This is a bind url example.</p>
+        <a :href="url" :target="target">url</a>
+        <p>test onclick (Learn from source code to see how to use onclick)</p>
+        <a @click="doOutput" href="javascript:void(0);"><span :style="urlBindColor">click here</span></a>
+    </div>
+
+</div>
+<script type="text/javascript">
+var app1 = new Vue({
+    el: '#app-1',
+    data: {
+        msg: 'HELLO VUE',
+        inputTest: '',
+        modelText:'',
+        content: 'In this page, we will learn how to bind attribute.',
+        contentColor: 'color:blue',
+        message: 'You loaded this page on ' + new Date(),
+        messageNotice: 'Hover your mouse over me for a few seconds to see my dynamically bound title!',
+        dynamicId: 1,
+        isButtonDisabled:false,
+        color: 'color:red',
+        seen: true,
+        testBindClass: 'In this example, you can check v-bind:class.',
+        bindColorMsg: 'You can use app1.isActive and app1.hasError to change the bind class.',
+        bindColor: 'color:green',
+        isActive: false,
+        hasError: true,
+        classObject: {
+            active: true,
+            'text-danger': false
+        },
+        bindObjectClass:'color:orange',
+        url: 'http://www.qq.com',
+        target: '_blank',
+        urlBindColor: 'color:red',
+        bindFilterColor: 'color:pink',
+        bindFilterMsg: 'This is an example to show how to make a filter for message on pages.',
+        filterMsg: 'abc 123 efg',
+        filterNotice: '(This result is filtered. Please look the source code to know how to filter.)'
+    },
+    methods: {
+        doEventModifier : function() {
+            alert('This is event modifier.');
+        },
+        doKeyModifier : function() {
+            alert('This is key modifier.');
+        },
+        doSystemModifier : function() {
+            alert('This is System modifier.');
+        },
+        output : function() {
+            alert('u input an enter or a space.');
+        },
+        doOutput: function() {
+            console.log(321);
+        },
+        addOne: function(){
+            this.dynamicId = ++this.dynamicId;
+        },
+        subOne: function(){
+            this.dynamicId = --this.dynamicId;
+        }
+    },
+    filters : {
+        firstCharCapital : function(val, flag) {
+            val = val.toString();
+
+            if(flag) {
+                val = val.charAt(0).toUpperCase() + val.slice(1).toLowerCase();
+            } else {
+                val = val.toLowerCase();
+            }
+
+            return val;
+        },
+        filterA : function(value){
+            let arr = value.split(' ');
+            return arr[1];
+        },
+        filterB : function(value){
+            return value - 100;
+        }
+    }
+});
+</script>

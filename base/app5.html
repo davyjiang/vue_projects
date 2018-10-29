@@ -1,0 +1,117 @@
+<script src="https://unpkg.com/vue"></script>
+<div id="app-5">
+    <div>
+        <p :style="noticeColor">Test input text</p>
+        <input v-model="textMsg" placeholder="edit me">
+        <p>Text msg is: {{ textMsg }}</p>
+    </div>
+
+    <p>&nbsp;</p>
+
+    <div>
+        <p :style="noticeColor">Test input textarea</p>
+        <span style="white-space: pre-line">Textarea msg is: {{ textareaMsg }}</span>
+        <br>
+        <textarea v-model="textareaMsg" placeholder="add multiple lines"></textarea>
+    </div>
+
+    <p>&nbsp;</p>
+
+    <div>
+        <p :style="noticeColor">text single checkbox</p>
+        <input type="checkbox" v-model="checked">
+        <label for="checkbox">{{ checked }}</label>
+    </div>
+
+    <p>&nbsp;</p>
+
+    <div>
+        <p :style="noticeColor">text multiple checkboxes</p>
+        <input type="checkbox" value="Jack" v-model="checkBoxNames">
+        <label for="jack">Jack</label>
+        <input type="checkbox" value="John" v-model="checkBoxNames">
+        <label for="john">John</label>
+        <input type="checkbox" value="Mike" v-model="checkBoxNames">
+        <label for="mike">Mike</label>
+        <br>
+        <span>Checked names: {{ checkBoxNames }}</span>
+    </div>
+
+    <p>&nbsp;</p>
+
+    <div>
+        <p :style="noticeColor">text radio</p>
+        <input type="radio" value="One" v-model="picked">
+        <label for="one">One</label>
+        <br>
+        <input type="radio" value="Two" v-model="picked">
+        <label for="two">Two</label>
+        <br>
+        <span>Picked: {{ picked }}</span>
+    </div>
+
+    <p>&nbsp;</p>
+
+    <div>
+        <p :style="noticeColor">text single selected</p>
+        <select v-model="singleSelected">
+            <option disabled value="">Please select one</option>
+            <option v-for="option in singleOptions">{{option}}</option>
+        </select>
+        <p>Single Selected: {{ singleSelected }}</p>
+    </div>
+
+    <p>&nbsp;</p>
+
+    <div :style="noticeColor">
+        <p>text multiple selected</p>
+        <select v-model="multipleSelected" style="width: 50px;" multiple>
+            <option v-for="option in multipleOptions">{{option}}</option>
+        </select>
+        <br>
+        <p>Multiple Selected: {{ multipleSelected }}</p>
+    </div>
+
+    <p>&nbsp;</p>
+
+    <div>
+        <p :style="noticeColor">{{title}}</p>
+        <select v-model="selected">
+            <option v-for="option in options" v-bind:value="option.value">
+                {{ option.text }}
+            </option>
+        </select>
+        <br>
+        <span>Selected: {{ selected }}</span>
+    </div>
+</div>
+
+<script type="text/javascript">
+var app5 = new Vue({
+    el: '#app-5',
+    data: {
+        noticeColor: "color:red",
+        textMsg: '',
+        textareaMsg: '',
+        checked: true,
+        checkBoxNames: [],
+        picked: '',
+        singleSelected: '',
+        singleOptions: ['A', 'B', 'C'],
+        multipleSelected: [],
+        multipleOptions: ['a', 'b', 'c'],
+        title: 'dynamic multiple selected made by v-for, this example can learn how to show selected value. If change v-bind:value="option.value" to v-bind:value="option.text", you can get selected text',
+        selected: '',
+        options: [{
+            text: 'One',
+            value: 'A'
+        }, {
+            text: 'Two',
+            value: 'B'
+        }, {
+            text: 'Three',
+            value: 'C'
+        }],
+    }
+})
+</script>

@@ -1,0 +1,101 @@
+<script src="https://unpkg.com/vue"></script>
+<h2>Examples in this page are for v-if, v-for and using v-for in component.</h2>
+<div id="app-3">
+    <div>
+        <h3>This using v-for to loop an array. </h3>
+        <ul>
+            <li v-for="(value, key) in items">
+                {{ key }} : {{ value.message }}
+            </li>
+        </ul>
+    </div>
+    <div>
+        <h3>This using v-for to loop an object. It also uses the method Vue.set()</h3>
+        <table>
+            <thead>
+                <td>name</td>
+                <td>prop</td>
+                <td>index</td>
+            </thead>
+            <tr v-for="(name, prop, index) in person">
+                <td>{{name}}</td>
+                <td>{{prop}}</td>
+                <td>{{index}}</td>
+            </tr>
+        </table>
+        <p><button @click="changeName">changeName</button></p>
+    </div>
+    <p>&nbsp;</p>
+    <div>
+        <p @click="changeRandom">Click me to change Random</p>
+        <p v-if='seen'>I can see. Random is {{random}}.</p>
+        <p v-else>I can't see. Random is {{random}}.</p>
+    </div>
+    <p>&nbsp;</p>
+    <div>
+        <h1 v-show="ok">Hello!</h1>
+        <div v-if="type === 'A'">
+            A
+        </div>
+        <div v-else-if="type === 'B'">
+            B
+        </div>
+        <div v-else-if="type === 'C'">
+            C
+        </div>
+        <div v-else>
+            Not A/B/C
+        </div>
+    </div>
+
+    <div>
+        <h3>{{title}}</h3>
+        <li v-for="n in even(numbers)">{{ n }}</li>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+var app3 = new Vue({
+    el: '#app-3',
+    data: {
+        items: [
+            { message: 'Foo' },
+            { message: 'Bar' },
+            { message: 'Zoo' },
+        ],
+        person: {
+            name:'davy',
+            title:'CEO',
+            age: 37
+        },
+        red: 'color:red',
+        random : Math.random(),
+        ok: false,
+        type: 'A',
+        title: 'filter number from array using for',
+        numbers: [1, 2, 3, 4, 5, 6, 7, 8]
+    },
+    computed: {
+        // a computed getter
+        seen: function() {
+            // `this` points to the vm instance
+            return this.random > 0.5;
+        }
+    },
+    methods: {
+        changeName: function () {
+            Vue.set(this.person, 'name', 'ramsey')
+        },
+        changeRandom: function(){
+            this.random = Math.random();
+        },
+        even: function(numbers) {   //the following variable is number, which is from numbers array.
+            return numbers.filter(function(number) {
+                return number % 2 === 0
+            })
+        }
+    }
+});
+</script>

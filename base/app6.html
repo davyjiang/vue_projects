@@ -1,0 +1,143 @@
+<script src="https://unpkg.com/vue"></script>
+<div id="app-6">
+    <h1>Component</h1>
+    <div>
+        <h3>Using v-for with component, it is using an object to loop.</h3>
+        <ol>
+        <!--Now we provide each list-item with the item object it's representing, so that its content can be dynamic.
+          We also need to provide each component with a "key", which will be explained later.-->
+            <list-item v-for="(item, index) in groceryList" :item="item" :key="item.id" :index="index">
+            </list-item>
+             <p>In the console, enter app6.groceryList.push({ id:7, text: 'New item' }). You should see a new item appended to the list.</p>
+        </ol>
+    </div>
+    <div>
+        <h3>This is another example of using v-for with component.</h3>
+        <p>The following code <span :style="red">@click="$emit(\'remove\')"</span> the button label, it use <span :style="red"> '@click' to bind click event.</span> Then <span :style="red">'@click' and "$emit(\'name\')"</span> are used together, <span :style="red">it can emit element.</span> The last step, <span :style="red">'@remove="todos.splice(index, 1)"'</span> describes <span :style="red">a variable named remove, it is the variable will be emitted.</span></p>
+        <input v-model="newTodoText" @keyup.enter="addNewTodo" placeholder="Add a todo">
+        <ul>
+            <li is="todo-item" v-for="(todo, index) in todos" :key="todo.id" :title="todo.title" @remove="todos.splice(index, 1)"></li>
+        </ul>
+    </div>
+    <my-component></my-component>
+    <my-component></my-component>
+    <my-component></my-component>
+</div>
+
+<div id="app61">
+    <p><my-number></my-number></p>
+</div>
+
+<div id="app62">
+    <p><her-number></her-number></p>
+</div>
+
+<script type="text/javascript">
+Vue.component('list-item', {
+    props: ['item', 'index'],    //This props: ['item', 'index'] <=> v-bind:item="item" and v-bind:index="index"
+    template: `<p>{{item.id}} : {{ item.text }}. Index is {{index}}</p>`
+});
+
+Vue.component('todo-item', {
+    template: `
+        <li>
+          {{ title }}
+          <button v-on:click="$emit(\'remove\')">X</button>
+        </li>
+    `,
+    props: ['title']
+});
+
+Vue.component('my-component', {
+    template: `<div><button @click="sub">-</button> {{count}} <button @click="add">+</button></div>
+    `,
+    data: function(){//The data define in a component, it should return object, it uses to return each object back. It won't inflence others return.
+        return {
+            count: 0,
+            test: 'a'
+        }
+    },
+    methods: {
+        add: function(){
+            return this.count++;
+        },
+        sub: function(){
+            return this.count--;
+        },
+    }
+});
+
+var myComponent = {
+    template:`<div>My number is {{phone}}</div>`,
+    data: function(){
+        return {
+            phone: '0220997026'
+        }
+    }
+}
+
+var herComponent = {
+    template:`<div>Her number is {{phone}}</div>`,
+    data: function(){
+        return {
+            phone: '0273742280'
+        }
+    }
+}
+
+var app6 = new Vue({
+    el: '#app-6',
+    data: {
+        groceryList: [{
+            id: 3,
+            text: 'Vegetables'
+        }, {
+            id: 1,
+            text: 'Cheese'
+        }, {
+            id: 2,
+            text: 'Whatever else humans are supposed to eat'
+        }],
+        newTodoText: '',
+        todos: [
+            {
+                id: 1,
+                title: 'Do the dishes',
+            },
+            {
+                id: 2,
+                title: 'Take out the trash',
+            },
+            {
+                id: 3,
+                title: 'Mow the lawn'
+            }
+        ],
+        nextTodoId: 4,
+        red: 'color:red',
+    },
+    methods : {
+        addNewTodo: function () {
+            this.todos.push({
+                id: this.nextTodoId++,
+                title: this.newTodoText
+            })
+            this.newTodoText = ''
+        },
+    }
+})
+
+var app61 = new Vue({
+    el: '#app61',
+    components : {
+        'my-number' : myComponent
+    }
+})
+
+var app62 = new Vue({
+    el: '#app62',
+    components : {
+        'her-number' : herComponent
+    }
+})
+</script>

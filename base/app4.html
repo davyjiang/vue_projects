@@ -1,0 +1,59 @@
+<script src="https://unpkg.com/vue"></script>
+<div id="app-4">
+    <h2>In this page, all examples are used to describe event handlers which can listen to HTML.</h2>
+    <div>
+        <p :style="noticeColor">This example is for listen on click event.</p>
+        <button @click="addOne">Add 1</button>
+        <p>The button above has been clicked {{ counter }} times.</p>
+    </div>
+    <div>
+        <p>Test inline event trigger handlers</p>
+        &nbsp;&nbsp;
+        <button @click="say('hi')">say hi</button>
+        &nbsp;&nbsp;
+        <button @click="greet">Greet</button>
+        &nbsp;&nbsp;
+        <button @click="warn('Form cannot be submitted yet.', $event)">Submit</button>
+    </div>
+
+    <p>&nbsp;</p>
+    <span :style="noticeColor">Event modifiers and key modifiers </span><span>which you can find them in this  <a href="https://vuejs.org/v2/guide/events.html#Event-Modifiers" target="_blank" :style="noticeColor">link</a></span>
+</div>
+<script type="text/javascript">
+let app4 = new Vue({
+    el: '#app-4',
+    data: {
+        counter: 0,
+        name: 'Vue.js',
+        testEventTrigger: 'test even trigger',
+        noticeColor: 'color:red'
+    },
+    methods: {
+        addOne: function(){
+            ++this.counter;
+        },
+        greet: function(event) {
+            // `this` inside methods points to the Vue instance
+            console.log('Hello ' + this.name + '!')
+            // `event` is the native DOM event
+            if (event) {
+                console.log(event.target.tagName) //In this case, tagName is button.
+            }
+        },
+        say: function(msg) {
+            console.log(msg);
+        },
+        warn: function(message, event) {
+            // now we have access to the native event
+            if (event) {
+                console.log(event.target.tagName)
+                event.preventDefault()
+            }
+            console.log(message)
+        }
+    }
+});
+
+// you can invoke methods in JavaScript too
+app4.greet() // -> 'Hello Vue.js!
+</script>
