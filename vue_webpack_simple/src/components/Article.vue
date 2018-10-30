@@ -16,15 +16,32 @@ import Author from "./Author.vue";
 import Share from "./Share.vue";
 
 export default {
-    data(){
-        return {
-            title: 'This is an article',
-            author: 'Davy Jiang',
-            date: new Date(),
-            //date: (new Date()).toLocaleString(),  //this will display date and local time
-            content: 'This is the content.This is the content.This is the content.',
-            shareTimes: 0
-        }
+    props : {
+        title : {
+            type : [String, Number],
+            default : 'This is an article',
+            required : true
+        },
+        author : {
+            type : [String, Number],
+            default : 'Davy Jiang',
+            required : true
+        },
+        date : {
+            type : [String],
+            default : '',
+            required : true
+        },
+        content : {
+            type : [String],
+            default : '',
+            required : true
+        },
+        shareTimes : {
+            type : [Number],
+            default : 0,
+            required : true
+        },
     },
     filters : {
         moment : function(value){
