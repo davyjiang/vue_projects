@@ -1,17 +1,18 @@
 <template>
   <div>
-    <p>Written by {{author}} </p>
+    <p>Written by {{authorName}} </p>
   </div>
 </template>
 
 <script>
 export default {
-    data() {
-        return {
-            author : 'DavyJiang'
+    props : {
+        authorName : {
+            type : [String, Number],
+            default : '',
+            required : true
         }
     }
-
 }
 </script>
 
