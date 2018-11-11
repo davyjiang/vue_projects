@@ -1,60 +1,74 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+  <div id="vue-app">
+      <!-- picture -->
+      <div id="bag" :class="{ burst: ended }"></div>
+
+      <!-- status info -->
+      <div id="bag-health">
+          <div :style="{ width: health + '%' }"></div>
+      </div>
+
+      <!-- control game button -->
+      <div id="controls">
+          <button @click="punch" v-show="!ended">Punch</button>
+          <button @click="restart">Restart</button>
+      </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'app',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
-  }
+  export default {
+      data(){
+        return {
+          health: 100,
+          ended: false
+        }  
+      },
+      methods: {
+          punch: function(){
+              this.health -= 10;
+              if ( this.health <= 0 ){
+                  this.ended = true;
+              }
+          },
+          restart: function(){
+              this.health = 100;
+              this.ended = false;
+          }
+      },
+      computed: {
+
+      }
 }
 </script>
 
+
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+#bag{
+    width: 200px;
+    height: 500px;
+    margin: 0 auto;
+    background: url(./assets/bag.png) center no-repeat;
+    background-size: 80%;
 }
 
-h1, h2 {
-  font-weight: normal;
+#bag.burst{
+    background-image: url(./assets/bag-burst.png);
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
+#bag-health{
+    width: 200px;
+    border: 2px solid #000;
+    margin: 0 auto 20px auto;
 }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
+#bag-health div{
+    height: 20px;
+    background: crimson
 }
 
-a {
-  color: #42b983;
+#controls{
+    width: 120px;
+    margin: 0 auto;
 }
 </style>
